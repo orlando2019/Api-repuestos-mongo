@@ -1,6 +1,11 @@
-def repuestoEntity(item) -> dict:
+
+def repuestoEntity(item: object) -> dict:
+    """
+
+    :rtype: object
+    """
     return {
-        "id": str(item["_id"]),
+        'id': str(item['_id']),
         "referencia": item["referencia"],
         "descripcion": item["descripcion"],
         "unidad_de_venta": item["unidad_de_venta"],

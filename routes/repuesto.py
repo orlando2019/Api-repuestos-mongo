@@ -29,14 +29,18 @@ async def create_repuesto(repuesto: Repuesto):
 # Obteniendo Un Solo Repuesto Por id
 @repuesto.get("/repuestos/{id}", response_description = "Consiga un solo repuesto", response_model = Repuesto, )
 async def find_respuesto(id: str):
-	if (one_repuesto := repuestoEntity(collection_repuestos.find_one({"_id": ObjectId(id)}))) is not None:
+	try:
+		one_repuesto = repuestoEntity(collection_repuestos.find_one({"_id": ObjectId(id)}))
 		return one_repuesto
-	raise HTTPException(status_code = 404, detail = f"Repuesto {id} not found")
+	except:
+		raise HTTPException(status_code = 404, detail = f"Repuesto con ese id: {id} no existe")
 
 
 # Obteniendo Un Solo Repuesto Por Referencia
 @repuesto.get("/repuesto/{referencia}", response_description = "Consiga un solo repuesto por Referencia", response_model = Repuesto)
 async def find_repuesto_by_referencia(referencia: str):
-	if (one_repuesto_referencia := repuestoEntity(collection_repuestos.find_one({"referencia": referencia}))) is not None:
+	try:
+		one_repuesto_referencia = repuestoEntity(collection_repuestos.find_one({"referencia": referencia}))
 		return one_repuesto_referencia
-	raise HTTPException(status_code = 404, detail = f"El repuesto con esa referencia{referencia} no se encontró", )
+	except:
+		raise HTTPException(status_code = 404, detail = f"El repuesto con esa referencia: {referencia} : no se encontró", )
